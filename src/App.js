@@ -1,7 +1,27 @@
-// https://api.themoviedb.org/3/movie/550?api_key=6416483a86ac2b9cca0398229e64bbc6
+import { Switch, Route } from 'react-router-dom';
+import AppBar from './components/AppBar/AppBar';
+import Container from './components/Container/Container';
+import HomePageView from './views/HomePageView';
+import MoviePageView from './views/MoviePageView';
+import NotFoundView from './views/NotFoundView';
 
 function App() {
-  return <div></div>;
+  return (
+    <Container>
+      <AppBar />
+      <Switch>
+        <Route exact path="/">
+          <HomePageView></HomePageView>
+        </Route>
+        <Route exact path="/movies">
+          <MoviePageView></MoviePageView>
+        </Route>
+        <Route>
+          <NotFoundView></NotFoundView>
+        </Route>
+      </Switch>
+    </Container>
+  );
 }
 
 export default App;

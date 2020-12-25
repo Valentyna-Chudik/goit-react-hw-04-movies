@@ -17,9 +17,9 @@ export function fetchTrendingMovies() {
   );
 }
 
-export function fetchMovie() {
+export function fetchMovie(query) {
   return fetchWithErrorHandling(
-    `${BASE_URL}search/movie?api_key=${API_KEY}&query='new year'&language=en-US&page=1`,
+    `${BASE_URL}search/movie?api_key=${API_KEY}&query=${query}&language=en-US&page=1`,
   );
 }
 

@@ -1,6 +1,12 @@
 import { useState, useEffect } from 'react';
-import { NavLink, useRouteMatch } from 'react-router-dom';
-import { Route, useParams } from 'react-router-dom';
+import {
+  NavLink,
+  Route,
+  useRouteMatch,
+  useParams,
+  useHistory,
+} from 'react-router-dom';
+
 import * as movieAPI from '../services/movie-api';
 import CastView from './CastView';
 import ReviewsView from './ReviewsView';
@@ -14,8 +20,11 @@ export default function MovieDetailsView() {
     movieAPI.fetchMovieDetails(movieId).then(setMovie);
   }, [movieId]);
 
+  let history = useHistory();
+
   return (
     <>
+      <button onClick={() => history.goBack()}>Go Back</button>
       <img
         src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
         alt={movie.title}

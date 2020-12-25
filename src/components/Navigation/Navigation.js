@@ -1,12 +1,27 @@
 import { NavLink } from 'react-router-dom';
+import styles from './Navigation.module.css';
+import logo from '../../logo1.png';
 
 const Navigation = () => (
-  <nav>
-    <NavLink exact to="/">
-      Home
-    </NavLink>
-    <NavLink to="/movies">Movies</NavLink>
-    <hr />
+  <nav className={styles.navigation}>
+    <div className={styles.items}>
+      <img src={logo} alt="logo" width="80" className={styles.logo} />
+      <NavLink
+        exact
+        to="/"
+        className={styles.link}
+        activeClassName={styles.activeLink}
+      >
+        Home
+      </NavLink>
+      <NavLink
+        to="/movies"
+        className={styles.link}
+        activeClassName={styles.activeLink}
+      >
+        Movies
+      </NavLink>{' '}
+    </div>
   </nav>
 );
 

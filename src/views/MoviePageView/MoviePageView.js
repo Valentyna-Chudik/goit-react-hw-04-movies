@@ -1,8 +1,8 @@
 // import PageHeading from '../components/PageHeading/PageHeading';
 import { useState, useEffect } from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
-import * as movieAPI from '../services/movie-api';
-import SearchBar from '../components/SearchBar/SearchBar';
+import * as movieAPI from '../../services/movie-api';
+import SearchBar from '../../components/SearchBar/SearchBar';
 
 export default function MoviePageView() {
   const { url } = useRouteMatch();

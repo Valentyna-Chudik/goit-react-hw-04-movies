@@ -21,7 +21,7 @@ export default function MovieDetailsView() {
   }, [movieId]);
 
   let history = useHistory();
-  const date = new Date();
+
   return (
     <>
       <button onClick={() => history.goBack()}>Go Back</button>
@@ -31,7 +31,7 @@ export default function MovieDetailsView() {
       />
       <h2>
         {movie.title}
-        <span>({date.getFullYear(movie.release_date)})</span>
+        <span>({movie.release_date && movie.release_date.slice(0, 4)})</span>
       </h2>
       <p>
         User Score: <span>{movie.vote_average * 10}%</span>

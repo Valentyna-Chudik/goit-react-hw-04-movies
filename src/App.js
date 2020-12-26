@@ -1,28 +1,46 @@
+import { lazy, Suspense } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import AppBar from './components/AppBar/AppBar';
 import Container from './components/Container/Container';
-import HomePageView from './views/HomePageView/HomePageView';
-import MoviePageView from './views/MoviePageView/MoviePageView';
-import MovieDetailsView from './views/MovieDetailsPage/MovieDetailsPage';
+import Loader from './components/Loader/Loader';
+
+const HomePageView = lazy(() =>
+  import(
+    './views/HomePageView/HomePageView.js' /* webpackChunkName: "home-page-view" */
+  ),
+);
+const MoviePageView = lazy(() =>
+  import(
+    './views/MoviePageView/MoviePageView.js' /* webpackChunkName: "movie-page-view" */
+  ),
+);
+
+const MovieDetailsView = lazy(() =>
+  import(
+    './views/MovieDetailsPage/MovieDetailsPage.js' /* webpackChunkName: "movie-details-page" */
+  ),
+);
 
 function App() {
   return (
     <Container>
       <AppBar />
-      <Switch>
-        <Route exact path="/">
-          <HomePageView></HomePageView>
-        </Route>
+      <Suspense fallback={<Loader />}>
+        <Switch>
+          <Route exact path="/">
+            <HomePageView></HomePageView>
+          </Route>
 
-        <Route exact path="/movies">
-          <MoviePageView></MoviePageView>
-        </Route>
+          <Route exact path="/movies">
+            <MoviePageView></MoviePageView>
+          </Route>
 
-        <Route path="/movies/:movieId">
-          <MovieDetailsView></MovieDetailsView>
-        </Route>
-      </Switch>
+          <Route path="/movies/:movieId">
+            <MovieDetailsView></MovieDetailsView>
+          </Route>
+        </Switch>
+      </Suspense>
       <ToastContainer autoClose={3700} position="top-center" />
     </Container>
   );

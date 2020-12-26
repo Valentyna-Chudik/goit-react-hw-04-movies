@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import * as movieAPI from '../../services/movie-api';
+import defaultImg from '../../noPhoto.jpg';
 import styles from './CastView.module.css';
 
 export default function CastView({ movieId }) {
@@ -17,7 +18,11 @@ export default function CastView({ movieId }) {
             {cast.map(cast => (
               <li key={cast.id} className={styles.item}>
                 <img
-                  src={`https://image.tmdb.org/t/p/w300/${cast.profile_path}`}
+                  src={
+                    cast.profile_path
+                      ? `https://image.tmdb.org/t/p/w300/${cast.profile_path}`
+                      : defaultImg
+                  }
                   alt={cast.name}
                   className={styles.image}
                 />

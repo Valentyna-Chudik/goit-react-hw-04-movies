@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 import * as movieAPI from '../../services/movie-api';
+import defaultImg from '../../noPoster.png';
 
 import styles from './HomePageView.module.css';
 
@@ -21,7 +22,11 @@ export default function HomePageView() {
               <li key={movie.id} className={styles.item}>
                 <Link to={`${url}movies/${movie.id}`}>
                   <img
-                    src={`https://image.tmdb.org/t/p/w300/${movie.poster_path}`}
+                    src={
+                      movie.poster_path
+                        ? `https://image.tmdb.org/t/p/w300/${movie.poster_path}`
+                        : defaultImg
+                    }
                     alt={movie.title}
                     className={styles.image}
                   />

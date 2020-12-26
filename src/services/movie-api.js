@@ -1,5 +1,3 @@
-// https://api.themoviedb.org/3/movie/550?api_key=6416483a86ac2b9cca0398229e64bbc6
-
 const BASE_URL = 'https://api.themoviedb.org/3/';
 const API_KEY = '6416483a86ac2b9cca0398229e64bbc6';
 export const POSTER_URL = 'https://image.tmdb.org/t/p/w500';

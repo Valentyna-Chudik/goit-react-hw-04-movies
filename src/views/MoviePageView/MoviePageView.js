@@ -1,11 +1,11 @@
-// import PageHeading from '../components/PageHeading/PageHeading';
 import { useState, useEffect } from 'react';
 import { Link, useRouteMatch, useHistory, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import * as movieAPI from '../../services/movie-api';
+
 import SearchBar from '../../components/SearchBar/SearchBar';
-import defaultImg from '../../noPoster.png';
+import * as movieAPI from '../../services/movie-api';
 import styles from '../HomePageView/HomePageView.module.css';
+import defaultImg from '../../noPoster.png';
 
 export default function MoviePageView() {
   const { url } = useRouteMatch();

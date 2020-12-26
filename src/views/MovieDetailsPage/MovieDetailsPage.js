@@ -7,10 +7,11 @@ import {
   useHistory,
 } from 'react-router-dom';
 
-import * as movieAPI from '../../services/movie-api';
 import Loader from '../../components/Loader/Loader';
-import defaultImg from '../../noPoster.png';
+
+import * as movieAPI from '../../services/movie-api';
 import styles from './MovieDetailsPage.module.css';
+import defaultImg from '../../noPoster.png';
 
 const CastView = lazy(() =>
   import('../CastView/CastView.js' /* webpackChunkName: "cast-view" */),

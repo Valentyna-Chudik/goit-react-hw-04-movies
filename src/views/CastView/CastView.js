@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+
 import * as movieAPI from '../../services/movie-api';
-import defaultImg from '../../noPhoto.jpg';
 import styles from './CastView.module.css';
+import defaultImg from '../../noPhoto.jpg';
 
 export default function CastView({ movieId }) {
   const [cast, setCast] = useState([]);
@@ -36,3 +38,7 @@ export default function CastView({ movieId }) {
     </>
   );
 }
+
+CastView.propTypes = {
+  movieId: PropTypes.string.isRequired,
+};

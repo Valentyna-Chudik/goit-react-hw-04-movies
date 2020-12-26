@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
-import * as movieAPI from '../../services/movie-api';
-import defaultImg from '../../noPoster.png';
 
+import * as movieAPI from '../../services/movie-api';
 import styles from './HomePageView.module.css';
+import defaultImg from '../../noPoster.png';
 
 export default function HomePageView() {
   const { url } = useRouteMatch();

@@ -15,8 +15,8 @@ export default function HomePageView() {
 
   return (
     <>
-      <div className={styles.container}>
-        {movies && (
+      {movies && (
+        <div className={styles.container}>
           <ul className={styles.list}>
             {movies.map(movie => (
               <li key={movie.id} className={styles.item}>
@@ -35,8 +35,8 @@ export default function HomePageView() {
               </li>
             ))}
           </ul>
-        )}
-      </div>
+        </div>
+      )}
     </>
   );
 }

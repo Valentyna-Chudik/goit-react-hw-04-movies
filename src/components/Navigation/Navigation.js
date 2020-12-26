@@ -5,7 +5,9 @@ import logo from '../../logo1.png';
 const Navigation = () => (
   <nav className={styles.navigation}>
     <div className={styles.items}>
-      <img src={logo} alt="logo" width="80" className={styles.logo} />
+      <NavLink exact to="/">
+        <img src={logo} alt="logo" width="80" className={styles.logo} />
+      </NavLink>
       <NavLink
         exact
         to="/"

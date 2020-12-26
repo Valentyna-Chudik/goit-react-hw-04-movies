@@ -1,6 +1,6 @@
 // import PageHeading from '../components/PageHeading/PageHeading';
 import { useState, useEffect } from 'react';
-import { Link, useRouteMatch } from 'react-router-dom';
+import { Link, useRouteMatch, useHistory, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import * as movieAPI from '../../services/movie-api';
 import SearchBar from '../../components/SearchBar/SearchBar';
@@ -9,9 +9,10 @@ import styles from '../HomePageView/HomePageView.module.css';
 
 export default function MoviePageView() {
   const { url } = useRouteMatch();
+  const history = useHistory();
+  const location = useLocation();
   const [query, setQuery] = useState('');
   const [movies, setMovies] = useState([]);
-  // const [error, setError] = useState(null);
 
   useEffect(() => {
     if (!query) {
@@ -27,23 +28,20 @@ export default function MoviePageView() {
     });
   }, [query]);
 
-  // useEffect(() => {
-  //   if (!query) {
-  //     return;
-  //   }
+  useEffect(() => {
+    if (location.search === '') {
+      return;
+    }
 
-  //   movieAPI.fetchMovie(query).then(data => {
-  //     if (results.length === 0) {
-  //       toast.info(`Sorry, there are no matching results for ${query}!`);
-  //       return;
-  //     }
-  //     setMovies(data.results);
-  //   });
-  // }, [query]);
+    const newQuery = new URLSearchParams(location.search).get('query');
+    setQuery(newQuery);
+  }, [location.search]);
 
-  const onChangeQuery = query => {
-    setQuery(query);
+  const onChangeQuery = newQuery => {
+    if (query === newQuery) return;
+    setQuery(newQuery);
     setMovies([]);
+    history.push({ ...location, search: `query=${newQuery}` });
   };
 
   return (

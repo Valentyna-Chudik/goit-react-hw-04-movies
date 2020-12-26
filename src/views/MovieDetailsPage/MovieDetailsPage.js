@@ -10,6 +10,7 @@ import {
 import * as movieAPI from '../../services/movie-api';
 import CastView from '../CastView/CastView';
 import ReviewsView from '../ReviewsView/ReviewsView';
+import defaultImg from '../../noPoster.png';
 import styles from './MovieDetailsPage.module.css';
 
 export default function MovieDetailsView() {
@@ -30,10 +31,15 @@ export default function MovieDetailsView() {
       </button>
       <div className={styles.movieContainer}>
         <img
-          src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+          src={
+            movie.poster_path
+              ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
+              : defaultImg
+          }
           alt={movie.title}
           className={styles.image}
         />
+
         <div className={styles.infoContainer}>
           <h2 className={styles.title}>
             {movie.title}

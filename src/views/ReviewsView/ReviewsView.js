@@ -6,12 +6,22 @@ import styles from './ReviewView.module.css';
 
 export default function ReviewsView({ movieId }) {
   const [reviews, setReviews] = useState([]);
+  const [showMore, setShowMore] = useState(true);
+  // Also, 'react-simple-show-more' package can be used
 
   useEffect(() => {
     movieAPI.fetchMovieReviews(movieId).then(({ results }) => {
       setReviews(results);
     });
   }, [movieId]);
+
+  const getContent = content => {
+    return content.length > 500 ? content.slice(0, 500) + '...' : content;
+  };
+
+  const toggleShowMore = () => {
+    setShowMore(state => !state);
+  };
 
   return (
     <>
@@ -21,7 +31,15 @@ export default function ReviewsView({ movieId }) {
             {reviews.map(review => (
               <li key={review.id} className={styles.item}>
                 <p className={styles.author}>AUTHOR: {review.author}</p>
-                <p className={styles.content}>{review.content}</p>
+                <p className={styles.content}>
+                  {showMore ? getContent(review.content) : review.content}
+                  {review.content.length > 500 && (
+                    <span className={styles.showMore} onClick={toggleShowMore}>
+                      {' '}
+                      {showMore ? 'Show More >>' : 'Show Less <<'}
+                    </span>
+                  )}
+                </p>
               </li>
             ))}
           </ul>

@@ -1,17 +1,36 @@
 import { useState, useEffect } from 'react';
-import { Link, useRouteMatch } from 'react-router-dom';
+import { Link, useRouteMatch, useLocation, useHistory } from 'react-router-dom';
 
 import * as movieAPI from '../../services/movie-api';
+import PaginationList from '../../components/PaginationList/PaginationList';
 import styles from './HomePageView.module.css';
 import defaultImg from '../../noPoster.png';
 
 export default function HomePageView() {
   const { url } = useRouteMatch();
   const [movies, setMovies] = useState(null);
+  const location = useLocation();
+  const history = useHistory();
+  const [totalPages, setTotalPages] = useState(0);
+
+  const page = new URLSearchParams(location.search).get('page') ?? 1;
 
   useEffect(() => {
-    movieAPI.fetchTrendingMovies().then(({ results }) => setMovies(results));
-  }, []);
+    movieAPI.fetchTrendingMovies(page).then(({ results, total_pages }) => {
+      setMovies(results);
+      setTotalPages(total_pages);
+    });
+  }, [page]);
+
+  const onChangePage = (_event, page) => {
+    history.push({ ...location, search: `page=${page}` });
+
+    const options = {
+      top: 0,
+      behavior: 'smooth',
+    };
+    window.scrollTo(options);
+  };
 
   return (
     <>
@@ -37,6 +56,11 @@ export default function HomePageView() {
           </ul>
         </div>
       )}
+      <PaginationList
+        page={Number(page)}
+        totalPages={totalPages}
+        handleChange={onChangePage}
+      />
     </>
   );
 }

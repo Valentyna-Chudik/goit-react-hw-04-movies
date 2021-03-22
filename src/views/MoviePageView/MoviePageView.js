@@ -3,6 +3,7 @@ import { Link, useRouteMatch, useHistory, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import SearchBar from '../../components/SearchBar/SearchBar';
+import PaginationList from '../../components/PaginationList/PaginationList';
 import * as movieAPI from '../../services/movie-api';
 import styles from '../HomePageView/HomePageView.module.css';
 import defaultImg from '../../noPoster.png';
@@ -13,20 +14,24 @@ export default function MoviePageView() {
   const location = useLocation();
   const [query, setQuery] = useState('');
   const [movies, setMovies] = useState([]);
+  const [totalPages, setTotalPages] = useState(0);
+
+  const page = new URLSearchParams(location.search).get('page') ?? 1;
 
   useEffect(() => {
     if (!query) {
       return;
     }
 
-    movieAPI.fetchMovie(query).then(({ results }) => {
+    movieAPI.fetchMovie(query, page).then(({ results, total_pages }) => {
       if (results.length === 0) {
         toast.error(`No results were found for ${query}!`);
         return;
       }
       setMovies(results);
+      setTotalPages(total_pages);
     });
-  }, [query]);
+  }, [query, page]);
 
   useEffect(() => {
     if (location.search === '') {
@@ -34,14 +39,24 @@ export default function MoviePageView() {
     }
 
     const newQuery = new URLSearchParams(location.search).get('query');
-    setQuery(newQuery);
-  }, [location.search]);
+    setQuery(newQuery, page);
+  }, [location.search, page]);
 
   const onChangeQuery = newQuery => {
     if (query === newQuery) return;
     setQuery(newQuery);
     setMovies([]);
-    history.push({ ...location, search: `query=${newQuery}` });
+    history.push({ ...location, search: `query=${newQuery}&page=1` });
+  };
+
+  const onChangePage = (_event, page) => {
+    history.push({ ...location, search: `query=${query}&page=${page}` });
+
+    const options = {
+      top: 0,
+      behavior: 'smooth',
+    };
+    window.scrollTo(options);
   };
 
   return (
@@ -71,6 +86,11 @@ export default function MoviePageView() {
           </ul>
         </div>
       )}
+      <PaginationList
+        page={Number(page)}
+        totalPages={totalPages}
+        handleChange={onChangePage}
+      />
     </>
   );
 }

@@ -9,15 +9,15 @@ async function fetchWithErrorHandling(url = '', config = {}) {
     : Promise.reject(new Error('Not found'));
 }
 
-export function fetchTrendingMovies() {
+export function fetchTrendingMovies(page) {
   return fetchWithErrorHandling(
-    `${BASE_URL}trending/movie/day?api_key=${API_KEY}&page=1`,
+    `${BASE_URL}trending/movie/day?api_key=${API_KEY}&page=${page}`,
   );
 }
 
-export function fetchMovie(query) {
+export function fetchMovie(query, page) {
   return fetchWithErrorHandling(
-    `${BASE_URL}search/movie?api_key=${API_KEY}&query=${query}&language=en-US&page=1`,
+    `${BASE_URL}search/movie?api_key=${API_KEY}&query=${query}&language=en-US&page=${page}`,
   );
 }
 

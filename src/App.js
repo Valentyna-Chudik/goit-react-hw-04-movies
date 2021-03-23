@@ -5,6 +5,7 @@ import { ToastContainer } from 'react-toastify';
 import AppBar from './components/AppBar/AppBar';
 import Container from './components/Container/Container';
 import Loader from './components/Loader/Loader';
+import BackToTop from './components/BackToTop/BackToTop';
 
 const HomePageView = lazy(() =>
   import(
@@ -43,6 +44,7 @@ function App() {
         </Switch>
       </Suspense>
       <ToastContainer autoClose={3700} position="top-center" />
+      <BackToTop />
     </Container>
   );
 }

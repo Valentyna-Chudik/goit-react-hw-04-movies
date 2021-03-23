@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { Link, useRouteMatch, useLocation, useHistory } from 'react-router-dom';
 
 import * as movieAPI from '../../services/movie-api';
 import PaginationList from '../../components/PaginationList/PaginationList';
+import Loader from '../../components/Loader/Loader';
 import styles from './HomePageView.module.css';
 import defaultImg from '../../noPoster.png';
 
@@ -34,28 +35,35 @@ export default function HomePageView() {
 
   return (
     <>
-      {movies && (
-        <div className={styles.container}>
-          <ul className={styles.list}>
-            {movies.map(movie => (
-              <li key={movie.id} className={styles.item}>
-                <Link to={`${url}movies/${movie.id}`}>
-                  <img
-                    src={
-                      movie.poster_path
-                        ? `https://image.tmdb.org/t/p/w300/${movie.poster_path}`
-                        : defaultImg
-                    }
-                    alt={movie.title}
-                    className={styles.image}
-                  />
-                  <h2 className={styles.title}>{movie.title}</h2>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+      <Suspense fallback={<Loader />}>
+        {movies && (
+          <div className={styles.container}>
+            <ul className={styles.list}>
+              {movies.map(movie => (
+                <li key={movie.id} className={styles.item}>
+                  <Link
+                    to={{
+                      pathname: `${url}movies/${movie.id}`,
+                      state: { from: location },
+                    }}
+                  >
+                    <img
+                      src={
+                        movie.poster_path
+                          ? `https://image.tmdb.org/t/p/w300/${movie.poster_path}`
+                          : defaultImg
+                      }
+                      alt={movie.title}
+                      className={styles.image}
+                    />
+                    <h2 className={styles.title}>{movie.title}</h2>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </Suspense>
       <PaginationList
         page={Number(page)}
         totalPages={totalPages}

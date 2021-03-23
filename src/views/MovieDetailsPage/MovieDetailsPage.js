@@ -5,6 +5,7 @@ import {
   useRouteMatch,
   useParams,
   useHistory,
+  useLocation,
 } from 'react-router-dom';
 
 import Loader from '../../components/Loader/Loader';
@@ -27,16 +28,22 @@ export default function MovieDetailsView() {
   const { url, path } = useRouteMatch();
   const { movieId } = useParams();
   const [movie, setMovie] = useState({});
+  const history = useHistory();
+  const location = useLocation();
 
   useEffect(() => {
     movieAPI.fetchMovieDetails(movieId).then(setMovie);
   }, [movieId]);
 
-  let history = useHistory();
+  const handleGoBack = () => {
+    history.push(location?.state?.from ?? '/');
+  };
+
+  // let history = useHistory();
 
   return (
     <>
-      <button onClick={() => history.goBack()} className={styles.button}>
+      <button onClick={handleGoBack} className={styles.button}>
         Go Back
       </button>
       <div className={styles.movieContainer}>
@@ -74,14 +81,20 @@ export default function MovieDetailsView() {
 
       <nav className={styles.navigation}>
         <NavLink
-          to={`${url}/cast`}
+          to={{
+            pathname: `${url}/cast`,
+            state: { from: location?.state?.from ?? '/' },
+          }}
           className={styles.link}
           activeClassName={styles.activeLink}
         >
           Cast
         </NavLink>
         <NavLink
-          to={`${url}/reviews`}
+          to={{
+            pathname: `${url}/reviews`,
+            state: { from: location?.state?.from ?? '/' },
+          }}
           className={styles.link}
           activeClassName={styles.activeLink}
         >

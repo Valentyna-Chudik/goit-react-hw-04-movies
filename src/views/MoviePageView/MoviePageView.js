@@ -61,7 +61,6 @@ export default function MoviePageView() {
 
   return (
     <>
-      {/* <PageHeading text="Movie name" /> */}
       <SearchBar onSubmit={onChangeQuery} />
 
       {movies && (
@@ -69,7 +68,12 @@ export default function MoviePageView() {
           <ul className={styles.list}>
             {movies.map(movie => (
               <li key={movie.id} className={styles.item}>
-                <Link to={`${url}/${movie.id}`}>
+                <Link
+                  to={{
+                    pathname: `${url}/${movie.id}`,
+                    state: { from: location },
+                  }}
+                >
                   <img
                     src={
                       movie.poster_path

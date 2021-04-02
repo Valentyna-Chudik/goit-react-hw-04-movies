@@ -46,36 +46,38 @@ export default function MovieDetailsView() {
       <button onClick={handleGoBack} className={styles.button}>
         Go Back
       </button>
-      <div className={styles.movieContainer}>
-        <img
-          src={
-            movie.poster_path
-              ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
-              : defaultImg
-          }
-          alt={movie.title}
-          className={styles.image}
-        />
+      <div className={styles.wrapper}>
+        <div className={styles.movieContainer}>
+          <img
+            src={
+              movie.poster_path
+                ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
+                : defaultImg
+            }
+            alt={movie.title}
+            className={styles.image}
+          />
 
-        <div className={styles.infoContainer}>
-          <h2 className={styles.title}>
-            {movie.title}
-            <span>
-              ({movie.release_date && movie.release_date.slice(0, 4)})
-            </span>
-          </h2>
-          <p className={styles.vote}>User Score:</p>
-          <span className={styles.voteAv}>{movie.vote_average * 10}%</span>
-          <h3 className={styles.overview}>Overview</h3>
-          <p className={styles.descr}>{movie.overview}</p>
-          <p className={styles.genresTitle}>Genres</p>
-          {movie.genres && (
-            <ul className={styles.genresList}>
-              {movie.genres.map(genre => (
-                <li key={genre.id}>{genre.name}</li>
-              ))}
-            </ul>
-          )}
+          <div className={styles.infoContainer}>
+            <h2 className={styles.title}>
+              {movie.title}
+              <span>
+                ({movie.release_date && movie.release_date.slice(0, 4)})
+              </span>
+            </h2>
+            <p className={styles.vote}>User Score:</p>
+            <span className={styles.voteAv}>{movie.vote_average * 10}%</span>
+            <h3 className={styles.overview}>Overview</h3>
+            <p className={styles.descr}>{movie.overview}</p>
+            <p className={styles.genresTitle}>Genres</p>
+            {movie.genres && (
+              <ul className={styles.genresList}>
+                {movie.genres.map(genre => (
+                  <li key={genre.id}>{genre.name}</li>
+                ))}
+              </ul>
+            )}
+          </div>
         </div>
       </div>
 
